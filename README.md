@@ -63,15 +63,19 @@ As sugestões geradas pela IA devem ser verificadas antes de sua aplicação em 
 ## Estrutura do projeto
 
 ```text
-insightdesk-ia/
+insightdesk-ai/
 ├── frontend/              # Interface web em Vue 3
 ├── agente.py              # Configuração do agente de IA
 ├── ferramentas.py         # Busca de soluções e recuperação de contexto
 ├── database.py            # Conexão com PostgreSQL
-├── gerar_embeddings.py    # Geração de embeddings das soluções
+├── gerar_embeddings.py    # Geração de embeddings
 ├── main.py                # API FastAPI
-├── .gitignore
-└── README.md
+├── schema.sql             # Estrutura das tabelas
+├── seed.sql               # Dados de exemplo
+├── requirements.txt       # Dependências Python
+├── .env.example           # Exemplo de configuração
+├── .gitignore             # Arquivos ignorados pelo Git
+└── README.md              # Documentação do projeto
 ```
 
 ## Como executar localmente
@@ -93,19 +97,33 @@ cd insightdesk-ai
 
 ### 2. Configurar o banco de dados
 
-Crie um banco PostgreSQL chamado `insightdesk_ai` e habilite a extensão pgvector.
+O InsightDesk AI utiliza PostgreSQL com a extensão pgvector para armazenar chamados, soluções técnicas e embeddings.
 
-Execute os scripts SQL nesta ordem, conectando-se ao banco criado:
+**1. Criar o banco de dados**
+
+Utilizando o pgAdmin ou o terminal PostgreSQL, crie um banco chamado `insightdesk_ai`:
 
 ```sql
--- Primeiro: criar as tabelas
--- Execute o conteúdo de schema.sql
-
--- Depois: cadastrar soluções de exemplo
--- Execute o conteúdo de seed.sql
+CREATE DATABASE insightdesk_ai;
 ```
 
-Crie um arquivo `.env` na pasta principal, utilizando `.env.example` como referência:
+**2. Criar as tabelas**
+
+Conecte-se ao banco `insightdesk_ai` e execute o arquivo `schema.sql`.
+
+Esse script habilita a extensão `vector` e cria as tabelas `chamados` e `solucoes`.
+
+**Observação:** a extensão pgvector precisa estar instalada no servidor PostgreSQL para que o comando `CREATE EXTENSION vector` funcione.
+
+**3. Inserir os dados de exemplo**
+
+No mesmo banco, execute o arquivo `seed.sql`.
+
+Esse script cadastra quatro soluções técnicas fictícias que serão utilizadas pela base de conhecimento do agente de IA.
+
+**4. Configurar as variáveis de ambiente**
+
+Na pasta principal do projeto, crie um arquivo `.env` utilizando `.env.example` como referência:
 
 ```dotenv
 DB_HOST=localhost
@@ -115,28 +133,36 @@ DB_USER=postgres
 DB_PASSWORD=sua_senha_local
 ```
 
-Substitua os valores pelos dados da sua instalação. Não publique o arquivo `.env`.
+Substitua os valores pelas configurações do seu PostgreSQL.
 
-Após instalar as dependências Python e iniciar o Ollama com o modelo de embeddings disponível, execute:
+O arquivo `.env` contém informações locais de conexão e não deve ser publicado no GitHub.
 
-```bash
-python gerar_embeddings.py
-```
+**5. Gerar os embeddings**
 
-Esse comando gera e armazena os embeddings das soluções, necessários para a busca semântica.
+Após instalar as dependências Python e os modelos do Ollama, siga as instruções da seção **4. Preparar os modelos de IA** para gerar os embeddings das soluções cadastradas.
+
 
 ### 3. Preparar o backend
 
-Crie e ative um ambiente virtual Python.
-
-No Windows PowerShell:
+Na pasta principal do projeto, crie um ambiente virtual Python:
 
 ```powershell
 python -m venv .venv
+```
+
+Ative o ambiente virtual no Windows PowerShell:
+
+```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-Instale as dependências Python necessárias para executar a API, acessar o PostgreSQL e utilizar o agente de IA.
+Instale as dependências do projeto:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+O arquivo `requirements.txt` contém as bibliotecas utilizadas pelo backend, incluindo FastAPI, Uvicorn, Psycopg e OpenAI Agents SDK.
 
 ### 4. Preparar os modelos de IA
 
@@ -146,6 +172,15 @@ Com o Ollama instalado, baixe os modelos:
 ollama pull qwen3:4b
 ollama pull nomic-embed-text
 ```
+Após instalar as dependências Python, configurar o PostgreSQL, executar os scripts `schema.sql` e `seed.sql` e baixar os modelos do Ollama, gere os embeddings das soluções:
+
+```powershell
+python gerar_embeddings.py
+```
+
+Execute esse comando na pasta principal do projeto, com o ambiente virtual Python ativado e o serviço Ollama em funcionamento.
+
+Os embeddings são armazenados no PostgreSQL e utilizados na busca semântica do sistema. Para uma instalação nova, essa etapa deve ser executada antes de utilizar a análise com IA.
 
 Inicie o serviço do Ollama, caso ele não esteja em execução.
 
