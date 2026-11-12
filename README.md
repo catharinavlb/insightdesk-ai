@@ -72,18 +72,18 @@ As sugestões geradas pela IA devem ser verificadas antes de sua aplicação em 
 
 ```text
 insightdesk-ai/
-├── frontend/              # Interface web em Vue 3
-├── agente.py              # Configuração do agente de IA
-├── ferramentas.py         # Busca de soluções e recuperação de contexto
-├── database.py            # Conexão com PostgreSQL
-├── gerar_embeddings.py    # Geração de embeddings
-├── main.py                # API FastAPI
-├── schema.sql             # Estrutura das tabelas
-├── seed.sql               # Dados de exemplo
-├── requirements.txt       # Dependências Python
-├── .env.example           # Exemplo de configuração
-├── .gitignore             # Arquivos ignorados pelo Git
-└── README.md              # Documentação do projeto
+├── frontend/
+├── agente.py
+├── ferramentas.py
+├── database.py
+├── gerar_embeddings.py
+├── main.py
+├── schema.sql
+├── seed.sql
+├── requirements.txt
+├── .env.example
+├── .gitignore
+└── README.md
 ```
 
 ## Como executar localmente
