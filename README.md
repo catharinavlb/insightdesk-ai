@@ -16,6 +16,14 @@ O sistema permite registrar e acompanhar chamados técnicos, além de consultar 
 - Busca híbrida, combinando similaridade semântica e correspondência textual.
 - Apresentação de orientações técnicas, possíveis causas e procedimentos de validação.
 
+## Demonstração do sistema
+
+### Análise de chamados com inteligência artificial
+
+O InsightDesk AI permite descrever problemas técnicos e receber orientações geradas por um agente de IA, incluindo possíveis causas, procedimentos recomendados e formas de validação.
+
+![Demonstração da análise com IA no InsightDesk AI](docs/images/analise-ia.png)
+
 ## Tecnologias utilizadas
 
 ### Frontend
