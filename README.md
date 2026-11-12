@@ -180,6 +180,7 @@ Com o Ollama instalado, baixe os modelos:
 ollama pull qwen3:4b
 ollama pull nomic-embed-text
 ```
+Inicie o serviço do Ollama, caso ele não esteja em execução.
 Após instalar as dependências Python, configurar o PostgreSQL, executar os scripts `schema.sql` e `seed.sql` e baixar os modelos do Ollama, gere os embeddings das soluções:
 
 ```powershell
@@ -190,7 +191,6 @@ Execute esse comando na pasta principal do projeto, com o ambiente virtual Pytho
 
 Os embeddings são armazenados no PostgreSQL e utilizados na busca semântica do sistema. Para uma instalação nova, essa etapa deve ser executada antes de utilizar a análise com IA.
 
-Inicie o serviço do Ollama, caso ele não esteja em execução.
 
 O modelo `qwen3:4b` é utilizado para gerar as orientações técnicas, enquanto `nomic-embed-text` é responsável pela representação vetorial dos textos.
 
